@@ -87,8 +87,8 @@ function cancelAnalyserUpdates() {
 
 
 var freqs =  new Array();
-for (i = 0; i < FFT_SIZE; i++) {
-    freqs[i] = i;
+for (i = 0; i < FFT_SIZE / 2; i++) {
+    freqs[i] = i+1;
 }
 var plot = new D3Plot(freqs)
 //plot.draw()

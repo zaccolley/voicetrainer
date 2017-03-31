@@ -31,10 +31,10 @@ class D3Plot {
         
         this.g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        this.x = d3.scaleLinear()
+        this.x = d3.scaleLog().base(10)
             .rangeRound([0, this.width]);
 
-        this.y = d3.scaleLinear()
+        this.y = d3.scaleLog().base(10)
             .rangeRound([this.height, 0]);
 
         this.frequencies = frequencies;
@@ -59,12 +59,14 @@ class D3Plot {
             .x(function(d) { return self.x(d[0]); })
             .y(function(d) { return self.y(d[1]); });
 
-
         
         /*this.line = d3.line()
             .x(function(d) { return self.x(d[0]); })
             .y(function(d) { return self.y(d[1]); });
 */
+        this.y.domain([1, 100001]);
+        this.x.domain([1, frequencies.length]);
+       
         //this.x.domain(d3.extent(frequencies, function(d) { return d[0]; }));
         //this.y.domain(0, 200);
 
@@ -75,64 +77,22 @@ class D3Plot {
     draw(data){
         var self = this;
         var zipdata = _.zip(self.frequencies, data)
-        
-        self.x.domain(d3.extent(zipdata, function(d) { return d[0]; }));
-        self.y.domain(d3.extent(zipdata, function(d) { return d[1]; }));
+        var zipdataNonzero = _.filter(zipdata, 
+                function(d){ return d[1] > 0; }
+        );        
+
+        //self.x.domain(d3.extent(zipdata, function(d) { return d[0]; }));
+        //self.y.domain(d3.extent(zipdata, function(d) { return d[1]; }));
 
         d3.selectAll("path").remove();
         self.g.append("path")
-              .datum(zipdata)
+              //.datum(zipdata)
               .attr("fill", "none")
               .attr("stroke", "steelblue")
               .attr("stroke-linejoin", "round")
               .attr("stroke-linecap", "round")
               .attr("stroke-width", 1.5)
-              .attr("d", self.line);
-
-    }
-
-    drawstock(){
-
-        var self = this;
-        var line = d3.line()
-            .x(function(d) { return self.x(d.date); })
-            .y(function(d) { return self.y(d.close); });
-
-        d3.tsv("data.tsv", function(d) {
-          d.date = parseTime(d.date);
-          d.close = +d.close;
-          return d;
-        }, function(error, data) {
-          if (error) throw error;
-
-          self.x.domain(d3.extent(data, function(d) { return d.date; }));
-          self.y.domain(d3.extent(data, function(d) { return d.close; }));
-
-          self.g.append("g")
-              .attr("transform", "translate(0," + self.height + ")")
-              .call(d3.axisBottom(self.x))
-            .select(".domain")
-              .remove();
-
-          self.g.append("g")
-              .call(d3.axisLeft(self.y))
-            .append("text")
-              .attr("fill", "#000")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", "0.71em")
-              .attr("text-anchor", "end")
-              .text("Price ($)");
-
-          self.g.append("path")
-              .datum(data)
-              .attr("fill", "none")
-              .attr("stroke", "steelblue")
-              .attr("stroke-linejoin", "round")
-              .attr("stroke-linecap", "round")
-              .attr("stroke-width", 1.5)
-              .attr("d", line);
-        });
+              .attr("d", self.line(zipdataNonzero));
 
     }
 
