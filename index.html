@@ -3,10 +3,6 @@
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>Audio Recorder</title>
-
-	<script src="js/audiodisplay.js"></script>
-	<script src="js/recorder.js"></script>
-	<script src="js/main.js"></script>
 	<style>
 	html { overflow: hidden; }
 	body { 
@@ -62,11 +58,18 @@
 <body>
 	<div id="viz">
 		<canvas id="analyser" width="1024" height="500"></canvas>
-		<canvas id="wavedisplay" width="1024" height="500"></canvas>
+		<!--<canvas id="wavedisplay" width="1024" height="500"></canvas>-->
+		
 	</div>
-	<div id="controls">
+	<svg width="960" height="500"></svg>
+	<!--<div id="controls">
 		<img id="record" src="img/mic128.png" onclick="toggleRecording(this);">
 		<a id="save" href="#"><img src="img/save.svg"></a>
-	</div>
+	</div>-->
 </body>
+	<script src="bower_components/d3/d3.js"></script>
+        <script src="bower_components/lodash/lodash.js"></script>
+	<script src="js/audiodisplay.js"></script>
+	<script src="js/recorder.js"></script>
+	<script src="js/main.js"></script>
 </html>

@@ -24,6 +24,7 @@ var rafID = null;
 var analyserContext = null;
 var canvasWidth, canvasHeight;
 var recIndex = 0;
+var FFT_SIZE = 2048;
 
 /* TODO:
 
@@ -83,6 +84,15 @@ function cancelAnalyserUpdates() {
     rafID = null;
 }
 
+
+
+var freqs =  new Array();
+for (i = 0; i < FFT_SIZE / 2; i++) {
+    freqs[i] = i+1;
+}
+var plot = new D3Plot(freqs)
+//plot.draw()
+
 function updateAnalysers(time) {
     if (!analyserContext) {
         var canvas = document.getElementById("analyser");
@@ -117,6 +127,10 @@ function updateAnalysers(time) {
             analyserContext.fillStyle = "hsl( " + Math.round((i*360)/numBars) + ", 100%, 50%)";
             analyserContext.fillRect(i * SPACING, canvasHeight, BAR_WIDTH, -magnitude);
         }
+
+        // d3 code
+        plot.draw(freqByteData)
+
     }
     
     rafID = window.requestAnimationFrame( updateAnalysers );
@@ -146,7 +160,7 @@ function gotStream(stream) {
 //    audioInput = convertToMono( input );
 
     analyserNode = audioContext.createAnalyser();
-    analyserNode.fftSize = 2048;
+    analyserNode.fftSize = FFT_SIZE;
     inputPoint.connect( analyserNode );
 
     audioRecorder = new Recorder( inputPoint );

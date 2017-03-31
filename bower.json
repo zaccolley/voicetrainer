@@ -14,5 +14,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "d3": "^4.7.4",
+    "lodash": "^4.17.4"
+  }
 }
