@@ -1,0 +1,18 @@
+{
+  "name": "voicetrainer",
+  "homepage": "https://github.com/rjdowdall/voicetrainer",
+  "authors": [
+    "Rachel Dowdall <rjdowdall@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
