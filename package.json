@@ -1,0 +1,24 @@
+{
+  "name": "voicet",
+  "version": "1.0.0",
+  "description": "Voice trainer",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjdowdall/voicetrainer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rjdowdall/voicetrainer/issues"
+  },
+  "homepage": "https://github.com/rjdowdall/voicetrainer#readme",
+  "dependencies": {
+    "d3": "^4.7.4",
+    "lodash": "^4.17.4"
+  }
+}
